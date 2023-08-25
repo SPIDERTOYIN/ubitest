@@ -1,0 +1,43 @@
+
+
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Ubicación en Tiempo Real</title>
+  <script>
+    function initMap() {
+      // Crear un nuevo mapa centrado en una ubicación inicial
+      var map = new google.maps.Map(document.getElementById('map'), {
+        center: { lat: 0, lng: 0 }, // Centro en coordenadas iniciales
+        zoom: 15 // Nivel de zoom
+      });
+
+      // Obtener la ubicación en tiempo real del navegador
+      if (navigator.geolocation) {
+        navigator.geolocation.watchPosition(function(position) {
+          var latLng = {
+            lat: position.coords.latitude,
+            lng: position.coords.longitude
+          };
+
+          // Mover el mapa al marcador de la ubicación actual
+          map.setCenter(latLng);
+
+          // Agregar un marcador para la ubicación actual
+          var marker = new google.maps.Marker({
+            position: latLng,
+            map: map,
+            title: 'Ubicación Actual'
+          });
+        });
+      } else {
+        alert('La geolocalización no está disponible en este navegador.');
+      }
+    }
+  </script>
+  <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAK2r-S80mGP0UZHVU5X2CT7Zb234Hu1Ic&libraries=places&callback=initMap" async defer></script>
+</head>
+<body>
+  <div id="map" style="width: 100%; height: 600px;"></div>
+</body>
+</html>
